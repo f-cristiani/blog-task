@@ -21,6 +21,16 @@ export const viewsRouter = () => {
     });
   });
 
+  viewsRouter.get('/posts/:postId([0-9]+)', async (req, res) => {
+    const post = await BlogDataSource.getRepository(Post).findOneBy({
+      id: extractPostId(req),
+    });
+
+    res.render('detailView', {
+      post,
+    });
+  });
+
   return viewsRouter;
 };
 
@@ -36,4 +46,12 @@ const extractPaginationParams = (req: Request) => {
   }
 
   return page;
+};
+
+const extractPostId = (req: Request) => {
+  if (isNaN(Number(req.params.postId))) {
+    throw new Error('Invalid post id');
+  }
+
+  return Number(req.params.postId);
 };

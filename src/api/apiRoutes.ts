@@ -9,19 +9,26 @@ export const apiRouter = () => {
   });
 
   apiRouter.post('/posts', (req, res) => {
-    const body = req.body;
+    try {
+      const body = req.body;
 
-    BlogDataSource.getRepository(Post).insert({
-      title: body.title || '',
-      imageUrl: body.imageUrl || '',
-      content: body.content || '',
-      user: {
-        id: body.userId,
-      },
-    });
+      BlogDataSource.getRepository(Post).insert({
+        title: body.title || '',
+        imageUrl: body.imageUrl || '',
+        content: body.content || '',
+        user: {
+          id: body.userId,
+        },
+      });
 
-    res.status(200);
-    res.json({});
+      res.status(200);
+      res.json({});
+    } catch (error) {
+      res.status(500);
+      res.json({
+        status: 'Error',
+      });
+    }
   });
 
   return apiRouter;
