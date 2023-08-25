@@ -1,9 +1,10 @@
-import express, { Router } from 'express';
+import express from 'express';
 import mustacheExpress from 'mustache-express';
 import { API_PORT } from './config';
 import { BlogDataSource } from './datasource';
 import { apiRouter } from './api/apiRoutes';
 import bodyParser from 'body-parser';
+import { viewsRouter } from './viewRoutes/viewRoutes';
 
 BlogDataSource.initialize()
   .then(() => {
@@ -26,15 +27,5 @@ app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
 
-const views = () => {
-  const viewsRouter = Router();
-
-  viewsRouter.get('/', (_, res) => {
-    res.render('home');
-  });
-
-  return viewsRouter;
-};
-
 app.use('/api', apiRouter());
-app.use('/', views());
+app.use('/', viewsRouter());

@@ -1,1 +1,17 @@
-<h1>This is a Blog</h1>
+<h1>Blog</h1>
+
+{{#posts}}
+<div>
+  <ul>
+    <li>
+      Title: {{title}}
+    </li>
+    <li>
+      Content: {{content}}
+    </li>
+    <li>
+      Author: {{user.name}} - {{user.email}}
+    </li>
+  </ul>
+</div>
+{{/posts}}
