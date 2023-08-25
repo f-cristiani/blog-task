@@ -2,6 +2,22 @@ import express, { Router } from 'express';
 import mustacheExpress from 'mustache-express';
 import { API_PORT } from './config';
 
+import { BlogDataSource } from './datasource';
+
+BlogDataSource.initialize()
+  .then(() => {
+    BlogDataSource.synchronize();
+    console.log(`DB ready`);
+
+    app.listen(API_PORT, () => {
+      console.log(`[server]: Server is running at port ${API_PORT}`);
+    });
+  })
+  .catch(error => {
+    console.log(error);
+    process.exit(1);
+  });
+
 const app = express();
 
 app.engine('mustache', mustacheExpress());
@@ -29,7 +45,3 @@ const views = () => {
 
 app.use('/api', api());
 app.use('/', views());
-
-app.listen(API_PORT, () => {
-  console.log(`[server]: Server is running at port ${API_PORT}`);
-});
