@@ -1,8 +1,9 @@
 import express, { Router } from 'express';
 import mustacheExpress from 'mustache-express';
 import { API_PORT } from './config';
-
 import { BlogDataSource } from './datasource';
+import { apiRouter } from './api/apiRoutes';
+import bodyParser from 'body-parser';
 
 BlogDataSource.initialize()
   .then(() => {
@@ -19,19 +20,11 @@ BlogDataSource.initialize()
   });
 
 const app = express();
+app.use(bodyParser.json());
 
 app.engine('mustache', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', __dirname + '/views');
-
-const api = () => {
-  const apiRouter = Router();
-  apiRouter.get('/health', (_, res) => {
-    res.send('UP');
-  });
-
-  return apiRouter;
-};
 
 const views = () => {
   const viewsRouter = Router();
@@ -43,5 +36,5 @@ const views = () => {
   return viewsRouter;
 };
 
-app.use('/api', api());
+app.use('/api', apiRouter());
 app.use('/', views());
