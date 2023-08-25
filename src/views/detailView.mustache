@@ -4,3 +4,23 @@
   {{post.title}}
 </h2>
 
+<ul>
+  <li>
+    Content: {{post.content}}
+  </li>
+  <li>
+    Author: {{post.user.name}} - {{post.user.email}}
+  </li>
+</ul>
+
+
+<h3>
+Comments
+</h3>
+
+{{#comments}}
+  <ul>
+    <li> Comment: {{content}} </li>
+    <li> Author: {{user.name}} - {{user.email}} </li>
+  </ul>
+{{/comments}}
