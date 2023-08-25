@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Post } from '../entities/Post';
 import { BlogDataSource } from '../datasource';
+import { User } from '../entities/User';
 
 export const apiRouter = () => {
   const apiRouter = Router();
@@ -8,11 +9,11 @@ export const apiRouter = () => {
     res.send('UP');
   });
 
-  apiRouter.post('/posts', (req, res) => {
+  apiRouter.post('/posts', async (req, res) => {
     try {
       const body = req.body;
 
-      BlogDataSource.getRepository(Post).insert({
+      await BlogDataSource.getRepository(Post).insert({
         title: body.title || '',
         imageUrl: body.imageUrl || '',
         content: body.content || '',
@@ -22,12 +23,23 @@ export const apiRouter = () => {
       });
 
       res.status(200);
-      res.json({});
     } catch (error) {
       res.status(500);
-      res.json({
-        status: 'Error',
+    }
+  });
+
+  apiRouter.post('/users', async (req, res) => {
+    try {
+      const body = req.body;
+
+      await BlogDataSource.getRepository(User).insert({
+        name: body.name || '',
+        email: body.email || '',
       });
+
+      res.status(200);
+    } catch (error) {
+      res.status(500);
     }
   });
 
