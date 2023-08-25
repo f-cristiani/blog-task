@@ -1,0 +1,42 @@
+{
+  "include": ["src/**/*.ts"],
+  /* Visit https://aka.ms/tsconfig to read more about this file */
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "module": "commonjs",
+    "target": "es2022",
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+
+    /* Strict Type-Checking Options */
+    "noImplicitAny": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+
+    /* Module Resolution Options */
+    "allowSyntheticDefaultImports": true,
+
+    /* Build options */
+    "rootDirs": ["src", "openapi"],
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./build",
+    "removeComments": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
